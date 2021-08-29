@@ -75,4 +75,24 @@ class User() {
         localStorage.setItem('usersId', usersID);
         return usersID;
     }
+
+    save() {
+        let users = User.getUsersStorage();
+        if(this.id > 0) {
+            users.map(u => {
+                if(u._id == this.id) {
+                    Object.assign(u, this);
+                }
+
+                return u;
+            });
+        } else {
+            this._id = this.getNewID();
+            users.push(this);
+        }
+
+        localStorage.setItem('users', JSON.stringify(users));
+    }
+
+    
 }
