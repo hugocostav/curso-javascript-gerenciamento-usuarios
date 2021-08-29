@@ -6,10 +6,10 @@ class User() {
         this._birth = birth;
         this._country = country;
         this._email = email;
-        this._email = email;
         this._password = password;
         this._photo = photo;
         this._admin = admin;
+        this._register = new Date();
     }
 
     get id() {
