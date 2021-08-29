@@ -68,5 +68,11 @@ class User() {
         return users;
     }
 
-    
+    getNewID() {
+        let usersID = parseInt(localStorage.getItem('usersID'));
+        if(!usersID > 0) usersID = 0;
+        usersID++;
+        localStorage.setItem('usersId', usersID);
+        return usersID;
+    }
 }
