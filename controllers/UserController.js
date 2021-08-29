@@ -8,4 +8,43 @@ class UserController {
         this.onEdit();
         this.selectAll();
     }
+
+    onEdit() {
+        document.querySelector('#box-user-update .btn-cancel').addEventListener('click', e => {
+            this.showPanelCreate();
+        });
+
+        this.formIdUpdateEl.addEventListener('submit', event => {
+            event.preventDefault();
+
+            let btn = this.formIdUpdateEl.querySelector('[type=submit]');
+            btn.disable = true;
+            let values = this.getValues(this.formIdUpdateEl);
+            let index = this.formIdUpdateEl.dataset.trIndex;
+            let tr = this,tableEl.rows[index];
+            let userOld = JSON.parse(tr.dataset.user);
+            let result = Object.assign({}, userOld, values);
+
+            this.getPhoto(this.formIdUpdateEl)
+            .then(content =>{
+                if(!values.photo) {
+                    result._photo = userOld._photo;
+                } else {
+                    result._photo = content;
+                }
+
+                let user = new User();
+                user.loadFromJSON(result);
+                user.save();
+                this.getTr(user, tr);
+                this.updateCount();
+                this.formIdUpdateEl.reset();
+                btn.disabled = false;
+                this.showPanelCreate();
+
+            }, e => console.error(e) );
+        });
+    }
+
+    
 }
