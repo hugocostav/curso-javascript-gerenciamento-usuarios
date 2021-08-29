@@ -43,5 +43,21 @@ class User() {
         return this.admin;
     }
 
+    set photo(value) {
+        this._photo = value;
+    }
+
+    loadFronJSON(json) {
+        for(let name in json) {
+            switch(name) {
+                case '_register':
+                    this[name] = new Date(json[name]);
+                    break;
+                default:
+                    this[name] = json[name];
+            }
+        }
+    }
+
     
 }
