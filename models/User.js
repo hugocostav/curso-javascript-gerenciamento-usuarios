@@ -1,5 +1,5 @@
 class User() {
-    constructor (name, gender, birth, country, email, password, photo, admin) {
+    constructor(name, gender, birth, country, email, password, photo, admin) {
         this._id;
         this._name = name;
         this._gender = gender;
@@ -48,8 +48,8 @@ class User() {
     }
 
     loadFronJSON(json) {
-        for(let name in json) {
-            switch(name) {
+        for (let name in json) {
+            switch (name) {
                 case '_register':
                     this[name] = new Date(json[name]);
                     break;
@@ -61,7 +61,7 @@ class User() {
 
     static getUsersStorage() {
         let users = [];
-        if(localStorage.getItem('users')) {
+        if (localStorage.getItem('users')) {
             users = JSON.parse(localStorage.getItem('users'));
         }
 
@@ -70,7 +70,7 @@ class User() {
 
     getNewID() {
         let usersID = parseInt(localStorage.getItem('usersID'));
-        if(!usersID > 0) usersID = 0;
+        if (!usersID > 0) usersID = 0;
         usersID++;
         localStorage.setItem('usersId', usersID);
         return usersID;
@@ -78,9 +78,9 @@ class User() {
 
     save() {
         let users = User.getUsersStorage();
-        if(this.id > 0) {
+        if (this.id > 0) {
             users.map(u => {
-                if(u._id == this.id) {
+                if (u._id == this.id) {
                     Object.assign(u, this);
                 }
 
@@ -94,5 +94,14 @@ class User() {
         localStorage.setItem('users', JSON.stringify(users));
     }
 
-    
+    remove() {
+        let users = Users.getUsersStorage();
+        users.forEach((userData, index) => {
+            if (this._id == userData._id) {
+                users.splice(index, 1);
+            }
+        });
+
+        localStorage.setItem('users', JSON.stringify(users));
+    }
 }
