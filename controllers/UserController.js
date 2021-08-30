@@ -210,4 +210,18 @@ class UserController {
         document.querySelector('#box-user-create').style.display = 'none';
         document.querySelector('#box-user-update').style.display = 'block';
     }
+
+    updateCount() {
+        let numberUsers = 0;
+        let numberAdimin = 0;
+
+        [...this.tableEl.children].forEach(tr => {
+            numberUsers++;
+            let user = JSON.parse(tr.dataset.user);
+            if(user._admin) numberAdimin++;
+        });
+
+        document.querySelector('#number-users').innerHTML = numberUsers;
+        document.querySelector('#number-users-admin').innerHTML = numberAdimin;
+    }
 }
