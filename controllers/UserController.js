@@ -200,4 +200,14 @@ class UserController {
             }
         });
     }
+
+    showPanelCreate() {
+        document.querySelector('#box-user-create').style.display = 'block';
+        document.querySelector('#box-user-update').style.display = 'none';
+    }
+
+    showPanelUpdate() {
+        document.querySelector('#box-user-create').style.display = 'none';
+        document.querySelector('#box-user-update').style.display = 'block';
+    }
 }
