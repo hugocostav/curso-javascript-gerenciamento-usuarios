@@ -160,4 +160,44 @@ class UserController {
         this.addEventsTr(tr);
         return tr;
     }
+
+    addEventsTr(tr) {
+        tr.querySelector('.btn-delete').addEventListener('click', e => {
+            if(confirm('Deseja realmente excluir?')) {
+                let user = new User();
+                user.loadFromJSON(JSON.parse(tr.dataset.user));
+                user.remove();
+                tr.remove();
+                this.updateCount();
+            }
+        });
+
+        tr.querySelector('.btn-edit').addEventListener('click', e => {
+            let json = JSON.parse(tr.dataset.user);
+            this.formIdUpdateEl.dataset.trIndex = tr.sectionRowIndex;
+
+            for(let name in json) {
+                let field = this.formIdUpdateEl.querySelector(`[name= ${name.replace('_', '')} ]`);
+
+                if(field) {
+                    switch (field.type) {
+                        case 'file':
+                            continue;
+                            break;
+                        case 'radio';
+                            field = this.formUpdateEl.querySelector(`[name= ${name.replace('_', '')}][value= ${json[name]}]`);
+                            break
+                        case 'checkbox':
+                            field.checked = json[name];
+                            break
+                        default:
+                            field.value = json[name];
+                    }
+                }
+
+                this.formIdUpdateEl.querySelector('photo').src = json._photo;
+                this.showPanelUpdate();
+            }
+        });
+    }
 }
