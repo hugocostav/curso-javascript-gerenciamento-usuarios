@@ -135,5 +135,9 @@ class UserController {
         });
     }
 
-
+    addLine(dataUser) {
+        let tr = this.getTr(dataUser);
+        this.tableEl.appendChild(tr);
+        this.updateCount();
+    }
 }
