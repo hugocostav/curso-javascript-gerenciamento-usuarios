@@ -125,4 +125,15 @@ class UserController {
             user.admin
         );
     }
+
+    selectAll() {
+        let users = User.getUsersStorage();
+        users.forEach(dataUser => {
+            let user = new User();
+            user.loadFromJSON(dataUser);
+            this.addLine(user);
+        });
+    }
+
+
 }
