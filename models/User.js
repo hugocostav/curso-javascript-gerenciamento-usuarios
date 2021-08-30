@@ -1,6 +1,6 @@
-class User() {
+class User {
     constructor(name, gender, birth, country, email, password, photo, admin) {
-        this._id;
+        this._id = 0;
         this._name = name;
         this._gender = gender;
         this._birth = birth;
@@ -40,14 +40,14 @@ class User() {
         return this._password;
     }
     get admin() {
-        return this.admin;
+        return this._admin;
     }
 
     set photo(value) {
         this._photo = value;
     }
 
-    loadFronJSON(json) {
+    loadFromJSON(json) {
         for (let name in json) {
             switch (name) {
                 case '_register':
@@ -72,7 +72,7 @@ class User() {
         let usersID = parseInt(localStorage.getItem('usersID'));
         if (!usersID > 0) usersID = 0;
         usersID++;
-        localStorage.setItem('usersId', usersID);
+        localStorage.setItem('usersId', usersID.toString());
         return usersID;
     }
 
@@ -80,7 +80,7 @@ class User() {
         let users = User.getUsersStorage();
         if (this.id > 0) {
             users.map(u => {
-                if (u._id == this.id) {
+                if (u._id === this.id) {
                     Object.assign(u, this);
                 }
 
@@ -95,9 +95,9 @@ class User() {
     }
 
     remove() {
-        let users = Users.getUsersStorage();
+        let users = User.getUsersStorage();
         users.forEach((userData, index) => {
-            if (this._id == userData._id) {
+            if (this._id === userData._id) {
                 users.splice(index, 1);
             }
         });
