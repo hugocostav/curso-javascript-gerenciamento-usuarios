@@ -46,5 +46,21 @@ class UserController {
         });
     }
 
-    
+    onSubmit() {
+        this.formEl.addEventListener('submit', event => {
+            event.preventDefault();
+            let btn = this.formEl.querySelector('[type=submit]');
+            btn.disbled = true;
+            let values = this.getValues(this.formEl);
+            if(!values) return false;
+            this.getPhoto(this.formEl)
+                .then((content) => {
+                    values.photo = content;
+                    values.save();
+                    this.addLine(values);
+                    this.formEl.reset();
+                    btn.disbled = false;
+                }, (e) => console.error(e));
+        });
+    }
 }
