@@ -89,4 +89,40 @@ class UserController {
         }
         });
     }
+
+    getValues(formEl) {
+        let user = {};
+        let isValid = true;
+        [...formEl.elements].forEach((field, index) => {
+            if(['name', 'email', 'password'].indexOf(field.name) > -1 && !field.values) {
+                field.parentElement.classList.add('has-error');
+                isValid = false;
+            }
+
+            if(field.name == 'gender') {
+                if(field.checked) {
+                    user[field.name] = field.value;
+                }
+            } else if(field.name == 'admin') {
+                user[field.name] == field.checked;
+            } else {
+                user[field.name] == field.value;
+            }
+        });
+
+        if(!isValid) {
+            return false;
+        }
+
+        return  new User(
+            user.name,
+            user.gender,
+            user.birth,
+            user.country,
+            user.email,
+            user.password,
+            user.photo,
+            user.admin
+        );
+    }
 }
